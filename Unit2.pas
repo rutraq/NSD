@@ -25,25 +25,25 @@ type
     { Public declarations }
   end;
 const
-A = 5;{Константы для}
-c = 27;{генератора}
-M = 65536;{псевдослучайных чисел - ПСЧ}
+A = 5;{ГЉГ®Г­Г±ГІГ Г­ГІГ» Г¤Г«Гї}
+c = 27;{ГЈГҐГ­ГҐГ°Г ГІГ®Г°Г }
+M = 65536;{ГЇГ±ГҐГўГ¤Г®Г±Г«ГіГ·Г Г©Г­Г»Гµ Г·ГЁГ±ГҐГ« - ГЏГ‘Г—}
 var
   Form2: TForm2;
 
 var
 TempFile                : file of byte;
-InpF, OutF              : file of word; {файлы на входе и выходе}
-password, password1     : string; {переменные для работы с паролями}
-OutputFileName, Exten   : string; {переменные имен файлов}
-I, J, K, tmp            : byte; {переменные кодирования}
+InpF, OutF              : file of word; {ГґГ Г©Г«Г» Г­Г  ГўГµГ®Г¤ГҐ ГЁ ГўГ»ГµГ®Г¤ГҐ}
+password, password1     : string; {ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г»ГҐ Г¤Г«Гї Г°Г ГЎГ®ГІГ» Г± ГЇГ Г°Г®Г«ГїГ¬ГЁ}
+OutputFileName, Exten   : string; {ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г»ГҐ ГЁГ¬ГҐГ­ ГґГ Г©Г«Г®Гў}
+I, J, K, tmp            : byte; {ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г»ГҐ ГЄГ®Г¤ГЁГ°Г®ГўГ Г­ГЁГї}
 Temp, SCode, TByte, Code: word;
-Position                : LongInt; {переменные данных о процессе}
+Position                : LongInt; {ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г»ГҐ Г¤Г Г­Г­Г»Гµ Г® ГЇГ°Г®Г¶ГҐГ±Г±ГҐ}
 NowPos                  : real;
 TPassword               : array [1..255] of word;
-MasByte, Mas, MasEnd, PS: array [1..64] of word; {массивы перестановок}
+MasByte, Mas, MasEnd, PS: array [1..64] of word; {Г¬Г Г±Г±ГЁГўГ» ГЇГҐГ°ГҐГ±ГІГ Г­Г®ГўГ®ГЄ}
 T                       : array [0..64] of word;
-DirInfo, DirInfo1       : TSearchRec; {данные о файле}
+DirInfo, DirInfo1       : TSearchRec; {Г¤Г Г­Г­Г»ГҐ Г® ГґГ Г©Г«ГҐ}
 Exten1                  : string[3];
 
 implementation
@@ -61,13 +61,13 @@ begin
   password1 := '';
     while check1 = False do
       begin
-        password := InputBox('П А Р О Л Ь', 'ВВЕДИТЕ ПАРОЛЬ:', password);
+        password := InputBox('ГЏ ГЂ Гђ ГЋ Г‹ Гњ', 'Г‚Г‚Г…Г„Г€Г’Г… ГЏГЂГђГЋГ‹Гњ:', password);
           if password <> '' then
             begin
               check1 := True;
             end;
       end;
-  password1 := InputBox('П А Р О Л Ь', 'ВВЕДИТЕ ПАРОЛЬ ЕЩЁ РАЗ:', password1);
+  password1 := InputBox('ГЏ ГЂ Гђ ГЋ Г‹ Гњ', 'Г‚Г‚Г…Г„Г€Г’Г… ГЏГЂГђГЋГ‹Гњ Г…Г™ВЁ ГђГЂГ‡:', password1);
     while check = False do
       begin
         if (password = password1) and (length(password) <> 0) then
@@ -77,22 +77,22 @@ begin
             else
               begin
                 password1 := '';
-                password1 := InputBox('П А Р О Л Ь', 'ПАРОЛИ НЕ СОВПАДАЮТ, ВВЕДИТЕ ЕЩЁ РАЗ:', password1);
+                password1 := InputBox('ГЏ ГЂ Гђ ГЋ Г‹ Гњ', 'ГЏГЂГђГЋГ‹Г€ ГЌГ… Г‘ГЋГ‚ГЏГЂГ„ГЂГћГ’, Г‚Г‚Г…Г„Г€Г’Г… Г…Г™ВЁ ГђГЂГ‡:', password1);
               end;
       end;
 end;
 
-procedure TForm2.Button1Click(Sender: TObject);{шифровка файла}
+procedure TForm2.Button1Click(Sender: TObject);{ГёГЁГґГ°Г®ГўГЄГ  ГґГ Г©Г«Г }
 var check, check1:boolean;
 begin
   if OpenDialog1.Execute then
     begin
-      pass;{Получение пароля}
+      pass;{ГЏГ®Г«ГіГ·ГҐГ­ГЁГҐ ГЇГ Г°Г®Г«Гї}
     end;
 
   if OpenDialog1.FileName <> '' then
     begin
-      {Преобразовать файл}
+      {ГЏГ°ГҐГ®ГЎГ°Г Г§Г®ГўГ ГІГј ГґГ Г©Г«}
       FindFirst(OpenDialog1.FileName, faAnyFile, DirInfo);
         if DirInfo.Size mod 2 = 1 then
           begin
@@ -103,7 +103,7 @@ begin
             write(TempFile, tmp);
             CloseFile(TempFile);
            end;
-      {Изменение расширения}
+      {Г€Г§Г¬ГҐГ­ГҐГ­ГЁГҐ Г°Г Г±ГёГЁГ°ГҐГ­ГЁГї}
       assignFile(InpF, OpenDialog1.FileName);
       reset(InpF);
         for i := length(OpenDialog1.FileName) downto 1 do
@@ -127,10 +127,10 @@ begin
           Temp := ord(Exten[i]);
           Write(OutF, Temp);
         end;
-        {Начало шифрования}
+        {ГЌГ Г·Г Г«Г® ГёГЁГґГ°Г®ГўГ Г­ГЁГї}
         k := 1;
           repeat
-            {Считать из исходного файла блок размером 64*word}
+            {Г‘Г·ГЁГІГ ГІГј ГЁГ§ ГЁГ±ГµГ®Г¤Г­Г®ГЈГ® ГґГ Г©Г«Г  ГЎГ«Г®ГЄ Г°Г Г§Г¬ГҐГ°Г®Г¬ 64*word}
             begin
               for i := 1 to 64 do
                 if EOF(InpF) then MasByte[i] := 0 else read(InpF, MasByte[i]);
@@ -139,7 +139,7 @@ begin
                 if k < length(password) then inc(k) else k := 1;
                 for i := 1 to 64 do
                   begin
-                    {Шифровать с помощью ПСЧ}
+                    {ГГЁГґГ°Г®ГўГ ГІГј Г± ГЇГ®Г¬Г®Г№ГјГѕ ГЏГ‘Г—}
                     code := mas[i];
                     T[i] := (A * T[i-1] + C) mod M;
                     Code:=T[i] xor Code;
@@ -163,7 +163,7 @@ begin
       closeFile(InpF);
       Erase(InpF);
       CloseFile(OutF);
-      ShowMessage('Файл зашифрован');
+      ShowMessage('Г”Г Г©Г« Г§Г ГёГЁГґГ°Г®ГўГ Г­');
     end;
 end;
 
@@ -198,7 +198,7 @@ begin
         repeat
           begin
             for i := 1 to 64  do read(InpF, MasByte[i]);
-            for i := 1 to 8 do { начальная перестановка }
+            for i := 1 to 8 do { Г­Г Г·Г Г«ГјГ­Г Гї ГЇГҐГ°ГҐГ±ГІГ Г­Г®ГўГЄГ  }
               for j := 1 to 8 do
                 case i of
                   1: Mas[8*(i-1)+j]:=MasByte[66-8*j];
@@ -238,7 +238,6 @@ procedure TForm2.N2Click(Sender: TObject);
 begin
   Form2.Hide;
   Form1.Show;
-
 end;
 
 end.
