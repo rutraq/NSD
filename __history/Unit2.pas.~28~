@@ -238,7 +238,6 @@ procedure TForm2.N2Click(Sender: TObject);
 begin
   Form2.Hide;
   Form1.Show;
-
 end;
 
 end.
