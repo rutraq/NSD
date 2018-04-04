@@ -28,11 +28,11 @@ var
 
 var
    TempFile                : file of byte;
-   InpF, OutF              : file of word; {файлы на входе и выходе}
+   InpF, OutF, InpF1              : file of word; {файлы на входе и выходе}
    Password, Password1     : string; {переменные для работы с паролями}
-   OutputFileName, Exten, InputFileName   : string; {переменные имен файлов}
+   OutputFileName, Exten, InputFileName, TextOfFile   : string; {переменные имен файлов}
    I, J, K, tmp            : byte; {переменные кодирования}
-   Temp, SCode, TByte, Code: word;
+   Temp, SCode, TByte, Code, NewText: word;
    Position                : LongInt; {переменные данных о процессе}
    NowPos                  : real;
    TPassword               : array [1..255] of word;
@@ -108,11 +108,6 @@ begin
               2: Exten := copy(InputFileName, length(InputFileName)-2, i) + chr(0)
                 else Exten := copy(InputFileName, length(InputFileName)-2, 3)
             end;
-      for i := 1 to 3 do
-        begin
-          Temp := ord(Exten[i]);
-          Write(OutF, Temp);
-        end;
   k := 1;
     repeat
       begin
@@ -146,16 +141,17 @@ begin
   closeFile(InpF);
   Erase(InpF);
   CloseFile(OutF);
-  InputFileName := '1.A&Y';
-  for i := length(InputFileName) downto 1 do
-    if InputFileName = '.' then
+  RenameFile('1.A&Y', '1.txt');
+  AssignFile(InpF1, '1.txt');
+  reset(InpF1);
+    while not EOF(InpF1) do
       begin
-        InputFileName := copy(InputFileName, 1, i) + 'txt';
-        break;
+          read(InpF1, NewText);
+          TextOfFile := TextOfFile + chr(NewText);
       end;
-  AssignFile(Inpf, InputFileName);
-  rewrite(InpF);
-  CloseFile(InpF);
+  Memo2.Lines.Add(TextOfFile);
+  CloseFile(InpF1);
+  Erase(InpF1);
 end;
 
 procedure TForm3.FormClose(Sender: TObject; var Action: TCloseAction);
