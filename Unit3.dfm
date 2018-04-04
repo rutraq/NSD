@@ -41,5 +41,6 @@ object Form3: TForm3
     Height = 25
     Caption = #1047#1072#1096#1080#1092#1088#1086#1074#1072#1090#1100
     TabOrder = 2
+    OnClick = Button1Click
   end
 end
