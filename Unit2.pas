@@ -1,4 +1,4 @@
-unit Unit2;
+﻿unit Unit2;
 
 interface
 
@@ -61,13 +61,13 @@ begin
   password1 := '';
     while check1 = False do
       begin
-        password := InputBox('Ï À Ð Î Ë Ü', 'ÂÂÅÄÈÒÅ ÏÀÐÎËÜ:', password);
+        password := InputBox('P A S S W O R D', 'ENTER PASSWORD:', password);
           if password <> '' then
             begin
               check1 := True;
             end;
       end;
-  password1 := InputBox('Ï À Ð Î Ë Ü', 'ÂÂÅÄÈÒÅ ÏÀÐÎËÜ ÅÙ¨ ÐÀÇ:', password1);
+  password1 := InputBox('P A S S W O R D', 'ENTER PASSWORD ONE MORE TIME:', password1);
     while check = False do
       begin
         if (password = password1) and (length(password) <> 0) then
@@ -77,7 +77,7 @@ begin
             else
               begin
                 password1 := '';
-                password1 := InputBox('Ï À Ð Î Ë Ü', 'ÏÀÐÎËÈ ÍÅ ÑÎÂÏÀÄÀÞÒ, ÂÂÅÄÈÒÅ ÅÙ¨ ÐÀÇ:', password1);
+                password1 := InputBox('P A S S W O R D', 'PASSWORD IS INCORRECT, ENTER AGAIN:', password1);
               end;
       end;
 end;
@@ -163,7 +163,7 @@ begin
       closeFile(InpF);
       Erase(InpF);
       CloseFile(OutF);
-      ShowMessage('Ôàéë çàøèôðîâàí');
+      ShowMessage('File encrypted');
     end;
 end;
 
