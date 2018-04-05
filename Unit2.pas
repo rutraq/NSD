@@ -64,13 +64,13 @@ begin
   password1 := '';
     while check1 = False do
       begin
-        password := InputBox('P A S S W O R D', 'ENTER PASSWORD:', password);
+        password := InputBox('П А Р О Л Ь', 'ВВЕДИТЕ ПАРОЛЬ:', password);
           if password <> '' then
             begin
               check1 := True;
             end;
       end;
-  password1 := InputBox('P A S S W O R D', 'ENTER PASSWORD ONE MORE TIME:', password1);
+  password1 := InputBox('П А Р О Л Ь', 'ВВЕДИТЕ ПАРОЛЬ ЕЩЁ РАЗ:', password1);
     while check = False do
       begin
         if (password = password1) and (length(password) <> 0) then
@@ -80,7 +80,7 @@ begin
             else
               begin
                 password1 := '';
-                password1 := InputBox('P A S S W O R D', 'PASSWORD IS INCORRECT, ENTER AGAIN:', password1);
+                password1 := InputBox('П А Р О Л Ь', 'ПАРОЛИ НЕ СОВПАДАЮТ, ВВЕДИТЕ ЕЩЁ РАЗ:', password1);
               end;
       end;
 end;
