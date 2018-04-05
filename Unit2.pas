@@ -15,36 +15,39 @@ type
     Button1: TButton;
     Button2: TButton;
     OpenDialog2: TOpenDialog;
+    Memo1: TMemo;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure N2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
     { Public declarations }
   end;
 const
-A = 5;{Êîíñòàíòû äëÿ}
-c = 27;{ãåíåðàòîðà}
-M = 65536;{ïñåâäîñëó÷àéíûõ ÷èñåë - ÏÑ×}
+   A = 5;   {Константы для}
+   C =7;    {генератора}
+   M =5536; {псевдослучайных чисел, далее - ПСЧ}
+
 var
   Form2: TForm2;
 
 var
-TempFile                : file of byte;
-InpF, OutF              : file of word; {ôàéëû íà âõîäå è âûõîäå}
-password, password1     : string; {ïåðåìåííûå äëÿ ðàáîòû ñ ïàðîëÿìè}
-OutputFileName, Exten   : string; {ïåðåìåííûå èìåí ôàéëîâ}
-I, J, K, tmp            : byte; {ïåðåìåííûå êîäèðîâàíèÿ}
-Temp, SCode, TByte, Code: word;
-Position                : LongInt; {ïåðåìåííûå äàííûõ î ïðîöåññå}
-NowPos                  : real;
-TPassword               : array [1..255] of word;
-MasByte, Mas, MasEnd, PS: array [1..64] of word; {ìàññèâû ïåðåñòàíîâîê}
-T                       : array [0..64] of word;
-DirInfo, DirInfo1       : TSearchRec; {äàííûå î ôàéëå}
-Exten1                  : string[3];
+   TempFile                : file of byte;
+   InpF, OutF              : file of word; {файлы на входе и выходе}
+   Password, Password1     : string; {переменные для работы с паролями}
+   OutputFileName, Exten   : string; {переменные имен файлов}
+   I, J, K, tmp            : byte; {переменные кодирования}
+   Temp, SCode, TByte, Code: word;
+   Position                : LongInt; {переменные данных о процессе}
+   NowPos                  : real;
+   TPassword               : array [1..255] of word;
+   MasByte, Mas, MasEnd, PS: array [1..64] of word; {массивы перестановок}
+   T                       : array [0..64] of word;
+   DirInfo, DirInfo1       : TSearchRec; {данные о файле}
+   Exten1                  : string[3];
 
 implementation
 
@@ -82,17 +85,17 @@ begin
       end;
 end;
 
-procedure TForm2.Button1Click(Sender: TObject);{øèôðîâêà ôàéëà}
+procedure TForm2.Button1Click(Sender: TObject);{шифрование файла}
 var check, check1:boolean;
 begin
   if OpenDialog1.Execute then
     begin
-      pass;{Ïîëó÷åíèå ïàðîëÿ}
+      pass;{Получение пароля}
     end;
 
   if OpenDialog1.FileName <> '' then
     begin
-      {Ïðåîáðàçîâàòü ôàéë}
+      {Преобразовать файл}
       FindFirst(OpenDialog1.FileName, faAnyFile, DirInfo);
         if DirInfo.Size mod 2 = 1 then
           begin
@@ -103,7 +106,7 @@ begin
             write(TempFile, tmp);
             CloseFile(TempFile);
            end;
-      {Èçìåíåíèå ðàñøèðåíèÿ}
+      {Преобразование расширения файла}
       assignFile(InpF, OpenDialog1.FileName);
       reset(InpF);
         for i := length(OpenDialog1.FileName) downto 1 do
@@ -127,10 +130,10 @@ begin
           Temp := ord(Exten[i]);
           Write(OutF, Temp);
         end;
-        {Íà÷àëî øèôðîâàíèÿ}
+        {Начать шифрование}
         k := 1;
           repeat
-            {Ñ÷èòàòü èç èñõîäíîãî ôàéëà áëîê ðàçìåðîì 64*word}
+            {Считать из исходного файла блок размером 64*word}
             begin
               for i := 1 to 64 do
                 if EOF(InpF) then MasByte[i] := 0 else read(InpF, MasByte[i]);
@@ -139,7 +142,7 @@ begin
                 if k < length(password) then inc(k) else k := 1;
                 for i := 1 to 64 do
                   begin
-                    {Øèôðîâàòü ñ ïîìîùüþ ÏÑ×}
+                    {Шифровать с помощью ПСЧ}
                     code := mas[i];
                     T[i] := (A * T[i-1] + C) mod M;
                     Code:=T[i] xor Code;
@@ -163,7 +166,7 @@ begin
       closeFile(InpF);
       Erase(InpF);
       CloseFile(OutF);
-      ShowMessage('File encrypted');
+      ShowMessage('Файл зашифрован');
     end;
 end;
 
@@ -198,7 +201,7 @@ begin
         repeat
           begin
             for i := 1 to 64  do read(InpF, MasByte[i]);
-            for i := 1 to 8 do { íà÷àëüíàÿ ïåðåñòàíîâêà }
+            for i := 1 to 8 do {Конечная перестановка}
               for j := 1 to 8 do
                 case i of
                   1: Mas[8*(i-1)+j]:=MasByte[66-8*j];
@@ -225,13 +228,20 @@ begin
         until EOF(InpF);
       CloseFile(InpF);
       Erase(InpF);
-      CloseFile(OutF);  
+      CloseFile(OutF);
+      ShowMessage('Файл расшифрован');
   end;
 end;
 
 procedure TForm2.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Application.Terminate;
+end;
+
+procedure TForm2.FormCreate(Sender: TObject);
+begin
+  Memo1.Clear;
+  Memo1.Lines.Add('При зашифровке файла, ваш файл изменит расширение на .A&Y, а при расшифроке он изменит своё расширение на исходное, так что менять расширение в ручную нельзя.');
 end;
 
 procedure TForm2.N2Click(Sender: TObject);

@@ -10,6 +10,7 @@ object Form3: TForm3
   Font.Height = -13
   Font.Name = 'Tahoma'
   Font.Style = []
+  Menu = MainMenu1
   OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
@@ -42,5 +43,16 @@ object Form3: TForm3
     Caption = #1047#1072#1096#1080#1092#1088#1086#1074#1072#1090#1100
     TabOrder = 2
     OnClick = Button1Click
+  end
+  object MainMenu1: TMainMenu
+    Left = 328
+    Top = 40
+    object N1: TMenuItem
+      Caption = #1052#1077#1085#1102
+      object N2: TMenuItem
+        Caption = #1042#1077#1088#1085#1091#1090#1100#1089#1103' '#1074' '#1075#1083#1072#1074#1085#1086#1077' '#1084#1077#1085#1102
+        OnClick = N2Click
+      end
+    end
   end
 end

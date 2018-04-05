@@ -14,6 +14,7 @@ object Form2: TForm2
   OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Button1: TButton
@@ -33,6 +34,15 @@ object Form2: TForm2
     Caption = #1056#1072#1089#1096#1080#1092#1088#1086#1074#1072#1090#1100
     TabOrder = 1
     OnClick = Button2Click
+  end
+  object Memo1: TMemo
+    Left = 16
+    Top = 8
+    Width = 593
+    Height = 202
+    Lines.Strings = (
+      'Memo1')
+    TabOrder = 2
   end
   object MainMenu1: TMainMenu
     Left = 600
