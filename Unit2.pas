@@ -8,19 +8,17 @@ uses
 
 type
   TForm2 = class(TForm)
-    MainMenu1: TMainMenu;
-    N1: TMenuItem;
-    N2: TMenuItem;
     OpenDialog1: TOpenDialog;
     Button1: TButton;
     Button2: TButton;
     OpenDialog2: TOpenDialog;
     Memo1: TMemo;
+    BitBtn1: TBitBtn;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure N2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -83,6 +81,12 @@ begin
                 password1 := InputBox('П А Р О Л Ь', 'ПАРОЛИ НЕ СОВПАДАЮТ, ВВЕДИТЕ ЕЩЁ РАЗ:', password1);
               end;
       end;
+end;
+
+procedure TForm2.BitBtn1Click(Sender: TObject);
+begin
+  Form2.Hide;
+  Form1.Show;
 end;
 
 procedure TForm2.Button1Click(Sender: TObject);{шифрование файла}
@@ -241,13 +245,8 @@ end;
 procedure TForm2.FormCreate(Sender: TObject);
 begin
   Memo1.Clear;
-  Memo1.Lines.Add('При зашифровке файла, ваш файл изменит расширение на .A&Y, а при расшифроке он изменит своё расширение на исходное, так что менять расширение вручную нельзя. Если вы расшифровали файл с неверным паролем, то его нужно зашифровать обратно с тем же паролем и расшифвровать с верным');
-end;
-
-procedure TForm2.N2Click(Sender: TObject);
-begin
-  Form2.Hide;
-  Form1.Show;
+  Memo1.Lines.Add('При зашифровке файла, ваш файл изменит расширение на .A&Y, а при расшифроке он изменит своё расширение на исходное, так что менять расширение вручную нельзя.');
+  Memo1.Lines.Add(' Если вы расшифровали файл с неверным паролем, то его нужно зашифровать обратно с тем же паролем и расшифвровать с верным');
 end;
 
 end.
