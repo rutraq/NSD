@@ -18,8 +18,8 @@ object Form2: TForm2
   TextHeight = 13
   object Image1: TImage
     Left = 24
-    Top = 8
-    Width = 26
+    Top = 17
+    Width = 25
     Height = 25
     Picture.Data = {
       07544269746D6170A2070000424DA20700000000000036000000280000001900
