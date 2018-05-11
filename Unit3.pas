@@ -66,7 +66,6 @@ begin
             begin
               if (password = '') then
                 begin
-                  ShowMessage('Ты ебанутый??');
                   k := k + 1;
                 end;
               if password <> '' then
@@ -74,7 +73,10 @@ begin
                   check1 := True;
                 end;
             end
-            else Application.Terminate;
+            else
+              begin
+                Application.Terminate;
+              end;
       end;
   password1 := InputBox('П А Р О Л Ь', 'ВВЕДИТЕ ПАРОЛЬ ЕЩЁ РАЗ:', password1);
     while check = False do
@@ -83,7 +85,6 @@ begin
           begin
             if (password1 = '') then
               begin
-                ShowMessage('Ты ебанутый??');
                 k := k + 1;
               end;
             if (password = password1) and (length(password) <> 0) then
@@ -95,6 +96,10 @@ begin
                     password1 := '';
                     password1 := InputBox('П А Р О Л Ь', 'ПАРОЛИ НЕ СОВПАДАЮТ, ВВЕДИТЕ ЕЩЁ РАЗ:', password1);
                   end;
+          end;
+        if k = 3 then
+          begin
+            Application.Terminate;
           end;
       end;
 end;
