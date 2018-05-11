@@ -47,6 +47,7 @@ var
    T                       : array [0..64] of word;
    DirInfo, DirInfo1       : TSearchRec; {данные о файле}
    Exten1                  : string[3];
+   kolvo                   : integer;
 
 implementation
 
@@ -57,6 +58,7 @@ uses Unit1;
 procedure pass;
 var check, check1:boolean;
 begin
+  kolvo := 0;
   check := False;
   check1 := False;
   password := '';
@@ -64,23 +66,52 @@ begin
     while check1 = False do
       begin
         password := InputBox('П А Р О Л Ь', 'ВВЕДИТЕ ПАРОЛЬ:', password);
-          if password <> '' then
+          if kolvo < 3 then
             begin
-              check1 := True;
+              if (password = '') then
+                begin
+                  kolvo := kolvo + 1;
+                end;
+              if password <> '' then
+                begin
+                  check1 := True;
+                end;
+            end;
+          if kolvo = 3 then
+            begin
+              Form2.Hide;
+              Form1.Show;
+              ShowMessage('Пароль 3 раза не был введён');
+              check := True;
+              break;
             end;
       end;
-  password1 := InputBox('П А Р О Л Ь', 'ВВЕДИТЕ ПАРОЛЬ ЕЩЁ РАЗ:', password1);
     while check = False do
       begin
-        if (password = password1) and (length(password) <> 0) then
+        if kolvo < 3 then
           begin
-            check := True;
-          end
-            else
+            password1 := InputBox('П А Р О Л Ь', 'ВВЕДИТЕ ПАРОЛЬ ЕЩЁ РАЗ:', password1);
+            if (password1 = '') then
               begin
-                password1 := '';
-                password1 := InputBox('П А Р О Л Ь', 'ПАРОЛИ НЕ СОВПАДАЮТ, ВВЕДИТЕ ЕЩЁ РАЗ:', password1);
+                kolvo := kolvo + 1;
               end;
+            if (password = password1) and (length(password) <> 0) then
+              begin
+                check := True;
+              end;
+                {else
+                  begin
+                    password1 := '';
+                    password1 := InputBox('П А Р О Л Ь', 'ПАРОЛИ НЕ СОВПАДАЮТ, ВВЕДИТЕ ЕЩЁ РАЗ:', password1);
+                  end;  }
+          end;
+        if kolvo = 3 then
+          begin
+            Form2.Hide;
+            Form1.Show;
+            ShowMessage('Пароль 3 раза не был введён');
+            break;
+          end;
       end;
 end;
 
@@ -92,7 +123,7 @@ begin
       pass;{Получение пароля}
     end;
 
-  if OpenDialog1.FileName <> '' then
+  if (OpenDialog1.FileName <> '') and (kolvo <> 3) then
     begin
       {Преобразовать файл}
       FindFirst(OpenDialog1.FileName, faAnyFile, DirInfo);
