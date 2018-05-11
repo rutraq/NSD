@@ -43,6 +43,7 @@ var
    T                       : array [0..64] of word;
    DirInfo, DirInfo1       : TSearchRec; {данные о файле}
    Exten1                  : string[3];
+   kolvo                   :integer;
 
 implementation
 
@@ -52,9 +53,8 @@ uses Unit1;
 
 procedure pass;
 var check, check1:boolean;
-k:integer;
 begin
-  k := 0;
+  kolvo := 0;
   check := False;
   check1 := False;
   password := '';
@@ -62,49 +62,64 @@ begin
     while check1 = False do
       begin
         password := InputBox('П А Р О Л Ь', 'ВВЕДИТЕ ПАРОЛЬ:', password);
-          if k < 2 then
+          if kolvo < 3 then
             begin
               if (password = '') then
                 begin
-                  ShowMessage('Ты ебанутый??');
-                  k := k + 1;
+                  kolvo := kolvo + 1;
                 end;
               if password <> '' then
                 begin
                   check1 := True;
                 end;
-            end
-            else Application.Terminate;
+            end;
+          if kolvo = 3 then
+            begin
+              Form2.Hide;
+              Form1.Show;
+              ShowMessage('Ошибка ввода пароля');
+              check := True;
+              break;
+            end;
       end;
-  password1 := InputBox('П А Р О Л Ь', 'ВВЕДИТЕ ПАРОЛЬ ЕЩЁ РАЗ:', password1);
     while check = False do
       begin
-        if k < 2 then
+        if kolvo < 3 then
           begin
-            if (password1 = '') then
+            password1 := '';
+            password1 := InputBox('П А Р О Л Ь', 'ВВЕДИТЕ ПАРОЛЬ ЕЩЁ РАЗ:', password1);
+            if (password1 = '') or (password1 <> password) then
               begin
-                ShowMessage('Ты ебанутый??');
-                k := k + 1;
+                kolvo := kolvo + 1;
               end;
             if (password = password1) and (length(password) <> 0) then
               begin
                 check := True;
-              end
-                else
+              end;
+                {else
                   begin
                     password1 := '';
                     password1 := InputBox('П А Р О Л Ь', 'ПАРОЛИ НЕ СОВПАДАЮТ, ВВЕДИТЕ ЕЩЁ РАЗ:', password1);
-                  end;
+                  end;  }
+          end;
+        if kolvo = 3 then
+          begin
+            Form2.Hide;
+            Form1.Show;
+            ShowMessage('Ошибка ввода пароля');
+            break;
           end;
       end;
 end;
 
 procedure TForm3.Button1Click(Sender: TObject);
 begin
+  pass;
+  if kolvo <> 3 then
+    begin
   Memo1.Lines.SaveToFile('1.txt');
   Memo2.Clear;
   InputFileName := '1.txt';
-  pass;
   FindFirst(InputFileName, faAnyFile, DirInfo);
     if DirInfo.Size mod 2 = 1 then
       begin
@@ -177,6 +192,7 @@ begin
   Memo2.Lines.Add(TextOfFile);
   CloseFile(InpF1);
   Erase(InpF1);
+    end;
 end;
 
 procedure TForm3.FormClose(Sender: TObject; var Action: TCloseAction);

@@ -4,23 +4,22 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Menus;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Buttons, Vcl.Menus,
+  Vcl.ExtCtrls;
 
 type
   TForm2 = class(TForm)
-    MainMenu1: TMainMenu;
-    N1: TMenuItem;
-    N2: TMenuItem;
     OpenDialog1: TOpenDialog;
     Button1: TButton;
     Button2: TButton;
     OpenDialog2: TOpenDialog;
     Memo1: TMemo;
+    Image1: TImage;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure N2Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure Image1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -48,6 +47,7 @@ var
    T                       : array [0..64] of word;
    DirInfo, DirInfo1       : TSearchRec; {данные о файле}
    Exten1                  : string[3];
+   kolvo                   : integer;
 
 implementation
 
@@ -58,6 +58,7 @@ uses Unit1;
 procedure pass;
 var check, check1:boolean;
 begin
+  kolvo := 0;
   check := False;
   check1 := False;
   password := '';
@@ -65,23 +66,52 @@ begin
     while check1 = False do
       begin
         password := InputBox('П А Р О Л Ь', 'ВВЕДИТЕ ПАРОЛЬ:', password);
-          if password <> '' then
+          if kolvo < 3 then
             begin
-              check1 := True;
+              if (password = '') then
+                begin
+                  kolvo := kolvo + 1;
+                end;
+              if password <> '' then
+                begin
+                  check1 := True;
+                end;
+            end;
+          if kolvo = 3 then
+            begin
+              Form2.Hide;
+              Form1.Show;
+              ShowMessage('Ошибка ввода пароля');
+              check := True;
+              break;
             end;
       end;
-  password1 := InputBox('П А Р О Л Ь', 'ВВЕДИТЕ ПАРОЛЬ ЕЩЁ РАЗ:', password1);
     while check = False do
       begin
-        if (password = password1) and (length(password) <> 0) then
+        if kolvo < 3 then
           begin
-            check := True;
-          end
-            else
+            password1 := InputBox('П А Р О Л Ь', 'ВВЕДИТЕ ПАРОЛЬ ЕЩЁ РАЗ:', password1);
+            if (password1 = '') then
               begin
-                password1 := '';
-                password1 := InputBox('П А Р О Л Ь', 'ПАРОЛИ НЕ СОВПАДАЮТ, ВВЕДИТЕ ЕЩЁ РАЗ:', password1);
+                kolvo := kolvo + 1;
               end;
+            if (password = password1) and (length(password) <> 0) then
+              begin
+                check := True;
+              end;
+                {else
+                  begin
+                    password1 := '';
+                    password1 := InputBox('П А Р О Л Ь', 'ПАРОЛИ НЕ СОВПАДАЮТ, ВВЕДИТЕ ЕЩЁ РАЗ:', password1);
+                  end;  }
+          end;
+        if kolvo = 3 then
+          begin
+            Form2.Hide;
+            Form1.Show;
+            ShowMessage('Ошибка ввода пароля');
+            break;
+          end;
       end;
 end;
 
@@ -93,7 +123,7 @@ begin
       pass;{Получение пароля}
     end;
 
-  if OpenDialog1.FileName <> '' then
+  if (OpenDialog1.FileName <> '') and (kolvo <> 3) then
     begin
       {Преобразовать файл}
       FindFirst(OpenDialog1.FileName, faAnyFile, DirInfo);
@@ -241,10 +271,11 @@ end;
 procedure TForm2.FormCreate(Sender: TObject);
 begin
   Memo1.Clear;
-  Memo1.Lines.Add('При зашифровке файла, ваш файл изменит расширение на .A&Y, а при расшифроке он изменит своё расширение на исходное, так что менять расширение в ручную нельзя.');
+  Memo1.Lines.Add('При зашифровке файла, ваш файл изменит расширение на .A&Y, а при расшифроке он изменит своё расширение на исходное, так что менять расширение вручную нельзя.');
+  Memo1.Lines.Add(' Если вы расшифровали файл с неверным паролем, то его нужно зашифровать обратно с тем же паролем и расшифвровать с верным');
 end;
 
-procedure TForm2.N2Click(Sender: TObject);
+procedure TForm2.Image1Click(Sender: TObject);
 begin
   Form2.Hide;
   Form1.Show;

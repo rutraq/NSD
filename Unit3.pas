@@ -77,7 +77,7 @@ begin
             begin
               Form3.Hide;
               Form1.Show;
-              ShowMessage('Пароль 3 раза не был введён');
+              ShowMessage('Ошибка ввода пароля');
               check := True;
               break;
             end;
@@ -86,8 +86,9 @@ begin
       begin
         if kolvo < 3 then
           begin
+            password1 := '';
             password1 := InputBox('П А Р О Л Ь', 'ВВЕДИТЕ ПАРОЛЬ ЕЩЁ РАЗ:', password1);
-            if (password1 = '') then
+            if (password1 = '') or (password1 <> password) then
               begin
                 kolvo := kolvo + 1;
               end;
@@ -105,7 +106,7 @@ begin
           begin
             Form3.Hide;
             Form1.Show;
-            ShowMessage('Пароль 3 раза не был введён');
+            ShowMessage('Ошибка ввода пароля');
             break;
           end;
       end;
