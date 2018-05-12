@@ -384,6 +384,8 @@ begin
       CloseFile(OutF);
       ShowMessage('Файл зашифрован');
     end;
+  Panel1.Visible := False;
+  ComboBox1.Visible := False;
 end;
 
 procedure TForm2.ComboBox2Change(Sender: TObject);
@@ -445,6 +447,8 @@ if OpenDialog2.FileName <> '' then
       CloseFile(OutF);
       ShowMessage('Файл расшифрован');
   end;
+  Panel1.Visible := False;
+  ComboBox1.Visible := False;
 end;
 
 procedure TForm2.FormClose(Sender: TObject; var Action: TCloseAction);
