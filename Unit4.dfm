@@ -1,7 +1,7 @@
 object Form4: TForm4
   Left = 0
   Top = 0
-  Caption = 'Form4'
+  Caption = 'Enter'
   ClientHeight = 315
   ClientWidth = 256
   Color = clBtnFace

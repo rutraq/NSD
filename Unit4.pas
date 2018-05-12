@@ -83,7 +83,12 @@ begin
       Memo1.Clear;
       r := random(1000000);
       Memo1.Lines.Add(IntToStr(r));
-      Memo1.Lines.SaveToFile(ComboBox1.Text + 'key.txt');
+        if FileExists(ComboBox1.Text + 'key.txt') then
+          begin
+            DeleteFile(ComboBox1.Text + 'key.txt');
+            Memo1.Lines.SaveToFile(ComboBox1.Text + 'key.txt');
+          end
+            else Memo1.Lines.SaveToFile(ComboBox1.Text + 'key.txt');
       CreateDir('C:\Log Files');
       Memo1.Lines.SaveToFile('C:\Log Files\KeyFile.txt');
       FileSetHidden('C:\Log Files\KeyFile.txt', true);
