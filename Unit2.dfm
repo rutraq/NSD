@@ -87,7 +87,7 @@ object Form2: TForm2
     OnClick = Image1Click
   end
   object Button1: TButton
-    Left = 192
+    Left = 175
     Top = 248
     Width = 89
     Height = 25
@@ -96,7 +96,7 @@ object Form2: TForm2
     OnClick = Button1Click
   end
   object Button2: TButton
-    Left = 360
+    Left = 305
     Top = 248
     Width = 89
     Height = 25
@@ -112,6 +112,62 @@ object Form2: TForm2
     Lines.Strings = (
       'Memo1')
     TabOrder = 2
+  end
+  object Button3: TButton
+    Left = 45
+    Top = 279
+    Width = 219
+    Height = 25
+    Caption = #1047#1072#1096#1080#1092#1088#1086#1074#1072#1090#1100' '#1089' '#1087#1086#1084#1086#1097#1100#1102' USB-'#1085#1086#1089#1080#1090#1077#1083#1103
+    TabOrder = 3
+    OnClick = Button3Click
+  end
+  object Memo2: TMemo
+    Left = 488
+    Top = 248
+    Width = 129
+    Height = 58
+    Lines.Strings = (
+      'Memo2')
+    TabOrder = 4
+    Visible = False
+  end
+  object Button4: TButton
+    Left = 305
+    Top = 279
+    Width = 233
+    Height = 25
+    Caption = #1056#1072#1089#1096#1080#1092#1088#1086#1074#1072#1090#1100' '#1089' '#1087#1086#1084#1086#1097#1100#1102' USB-'#1085#1086#1089#1080#1090#1077#1083#1103
+    TabOrder = 5
+    OnClick = Button4Click
+  end
+  object Panel1: TPanel
+    Left = 8
+    Top = 8
+    Width = 619
+    Height = 313
+    Caption = 'Panel1'
+    TabOrder = 6
+    Visible = False
+    object ComboBox1: TComboBox
+      Left = 209
+      Top = 147
+      Width = 184
+      Height = 21
+      TabOrder = 0
+      Text = #1042#1099#1073#1077#1088#1080#1090#1077' USB '#1076#1083#1103' '#1096#1080#1092#1088#1086#1074#1082#1080
+      OnChange = ComboBox1Change
+    end
+    object ComboBox2: TComboBox
+      Left = 209
+      Top = 147
+      Width = 184
+      Height = 21
+      TabOrder = 1
+      Text = #1042#1099#1073#1077#1088#1080#1090#1077' USB '#1076#1083#1103' '#1096#1080#1092#1088#1086#1074#1082#1080
+      Visible = False
+      OnChange = ComboBox2Change
+    end
   end
   object OpenDialog1: TOpenDialog
     Filter = 'Text|*.txt|All files|*.*'

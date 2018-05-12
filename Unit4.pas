@@ -31,6 +31,20 @@ implementation
 {$R *.dfm}
 
 uses Unit1;
+
+function GetHardDiskSerial(const DriveLetter: PChar): string;
+var
+  NotUsed:     DWORD;
+  VolumeFlags: DWORD;
+  VolumeInfo:  array[0..MAX_PATH] of Char;
+  VolumeSerialNumber: DWORD;
+begin
+  GetVolumeInformation(PChar(DriveLetter),
+    nil, SizeOf(VolumeInfo), @VolumeSerialNumber, NotUsed,
+    VolumeFlags, nil, 0);
+  Result := Format('%8.8X', [VolumeSerialNumber])
+end;
+
 function FileSetHidden(const FileName: string; hid: Boolean): Boolean;
 var Flags: Integer;
 begin
@@ -81,18 +95,10 @@ begin
   if k = 0 then
     begin
       Memo1.Clear;
-      r := random(1000000);
-      Memo1.Lines.Add(IntToStr(r));
-        if FileExists(ComboBox1.Text + 'key.txt') then
-          begin
-            DeleteFile(ComboBox1.Text + 'key.txt');
-            Memo1.Lines.SaveToFile(ComboBox1.Text + 'key.txt');
-          end
-            else Memo1.Lines.SaveToFile(ComboBox1.Text + 'key.txt');
+      Memo1.Lines.Add(GetHardDiskSerial(PChar(ComboBox1.Text)));
       CreateDir('C:\Log Files');
       Memo1.Lines.SaveToFile('C:\Log Files\KeyFile.txt');
       FileSetHidden('C:\Log Files\KeyFile.txt', true);
-      FileSetHidden(ComboBox1.Text + 'key.txt', true);
       ShowMessage('Ключевой USB-носитель создан');
       Form4.Hide;
       Form1.Show;
@@ -103,16 +109,8 @@ begin
           Memo1.Lines.LoadFromFile('C:\Log Files\KeyFile.txt');
           key1 := Memo1.Lines.Text;
           Memo1.Clear;
-            if FileExists(ComboBox1.Text + 'key.txt') then
-              begin
-                Memo1.Lines.LoadFromFile(ComboBox1.Text + 'key.txt');
-                key2 := Memo1.Lines.Text;
-              end
-                else
-                  begin
-                    MessageDlg('Не является ключевым USB', mtWarning, [mbOk], 0);
-                    Form4.Close;
-                  end;
+          Memo1.Lines.Add(GetHardDiskSerial(PChar(ComboBox1.Text)));
+          key2 := Memo1.Lines.Text;
           if key1 = key2 then
             begin
               Form4.Hide;
