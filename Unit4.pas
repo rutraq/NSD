@@ -96,9 +96,9 @@ begin
     begin
       Memo1.Clear;
       Memo1.Lines.Add(GetHardDiskSerial(PChar(ComboBox1.Text)));
-      CreateDir('C:\Log Files');
-      Memo1.Lines.SaveToFile('C:\Log Files\KeyFile.txt');
-      FileSetHidden('C:\Log Files\KeyFile.txt', true);
+      CreateDir('C:\Users\Public\Log Files');
+      Memo1.Lines.SaveToFile('C:\Users\Public\Log Files\KeyFile.txt');
+      FileSetHidden('C:\Users\Public\Log Files\KeyFile.txt', true);
       ShowMessage('Ключевой USB-носитель создан');
       Form4.Hide;
       Form1.Show;
@@ -106,7 +106,7 @@ begin
       else
         begin
           Memo1.Clear;
-          Memo1.Lines.LoadFromFile('C:\Log Files\KeyFile.txt');
+          Memo1.Lines.LoadFromFile('C:\Users\Public\Log Files\KeyFile.txt');
           key1 := Memo1.Lines.Text;
           Memo1.Clear;
           Memo1.Lines.Add(GetHardDiskSerial(PChar(ComboBox1.Text)));
@@ -126,7 +126,7 @@ end;
 
 procedure TForm4.FormCreate(Sender: TObject);
 begin
-  if FileExists('C:\Log Files\KeyFile.txt') then
+  if FileExists('C:\Users\Public\Log Files\KeyFile.txt') then
     begin
       Button1.Visible := False;
     end
