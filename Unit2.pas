@@ -126,6 +126,19 @@ begin
       end;
 end;
 
+function GetHardDiskSerial(const DriveLetter: PChar): string;
+var
+  NotUsed:     DWORD;
+  VolumeFlags: DWORD;
+  VolumeInfo:  array[0..MAX_PATH] of Char;
+  VolumeSerialNumber: DWORD;
+begin
+  GetVolumeInformation(PChar(DriveLetter),
+    nil, SizeOf(VolumeInfo), @VolumeSerialNumber, NotUsed,
+    VolumeFlags, nil, 0);
+  Result := Format('%8.8X', [VolumeSerialNumber])
+end;
+
 procedure TForm2.Button1Click(Sender: TObject);{шифрование файла}
 var check, check1:boolean;
 begin
@@ -307,7 +320,9 @@ end;
 procedure TForm2.ComboBox1Change(Sender: TObject);
 begin
   if OpenDialog1.Execute then
-    password := ComboBox1.Text;
+    begin
+      password := GetHardDiskSerial(PChar(ComboBox1.Text));
+    end;
 
   if (OpenDialog1.FileName <> '') and (kolvo <> 3) then
     begin
@@ -386,12 +401,16 @@ begin
     end;
   Panel1.Visible := False;
   ComboBox1.Visible := False;
+  ComboBox1.Items.Clear;
+  ComboBox1.Text := 'Выберите USB для шифровки';
 end;
 
 procedure TForm2.ComboBox2Change(Sender: TObject);
 begin
 if OpenDialog2.Execute then
-  password := ComboBox2.Text;
+  begin
+    password := GetHardDiskSerial(PChar(ComboBox2.Text));
+  end;
 
 if OpenDialog2.FileName <> '' then
   begin
@@ -448,7 +467,9 @@ if OpenDialog2.FileName <> '' then
       ShowMessage('Файл расшифрован');
   end;
   Panel1.Visible := False;
-  ComboBox1.Visible := False;
+  ComboBox2.Visible := False;
+  ComboBox2.Items.Clear;
+  ComboBox2.Text := 'Выберите USB для расшифровки';
 end;
 
 procedure TForm2.FormClose(Sender: TObject; var Action: TCloseAction);

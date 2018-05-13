@@ -161,10 +161,10 @@ object Form2: TForm2
     object ComboBox2: TComboBox
       Left = 209
       Top = 147
-      Width = 184
+      Width = 192
       Height = 21
       TabOrder = 1
-      Text = #1042#1099#1073#1077#1088#1080#1090#1077' USB '#1076#1083#1103' '#1096#1080#1092#1088#1086#1074#1082#1080
+      Text = #1042#1099#1073#1077#1088#1080#1090#1077' USB '#1076#1083#1103' '#1088#1072#1089#1096#1080#1092#1088#1086#1074#1082#1080
       Visible = False
       OnChange = ComboBox2Change
     end

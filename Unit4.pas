@@ -89,7 +89,7 @@ begin
 end;
 
 procedure TForm4.ComboBox1Change(Sender: TObject);
-var r:integer;
+var
 key1, key2:string;
 begin
   if k = 0 then
