@@ -17,6 +17,7 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Image1Click(Sender: TObject);
     procedure Memo1Change(Sender: TObject);
+    procedure Image1MouseEnter(Sender: TObject);
   private
     { Private declarations }
   public
@@ -212,6 +213,11 @@ begin
   Form1.Show;
   Memo1.Clear;
   Memo2.Clear;
+end;
+
+procedure TForm3.Image1MouseEnter(Sender: TObject);
+begin
+  Form3.Image1.Cursor := CrHandPoint;
 end;
 
 procedure TForm3.Memo1Change(Sender: TObject);

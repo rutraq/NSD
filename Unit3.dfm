@@ -1,9 +1,11 @@
 object Form3: TForm3
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = 'Test'
-  ClientHeight = 325
-  ClientWidth = 635
+  ClientHeight = 337
+  ClientWidth = 647
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -85,6 +87,7 @@ object Form3: TForm3
       E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4
       E4E4E4E4E4E4E4E4E4E4E4E4E400}
     OnClick = Image1Click
+    OnMouseEnter = Image1MouseEnter
   end
   object Memo1: TMemo
     Left = 8

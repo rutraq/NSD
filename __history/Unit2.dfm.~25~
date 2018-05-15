@@ -1,11 +1,9 @@
 object Form2: TForm2
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu, biMinimize]
-  BorderStyle = bsSingle
   Caption = 'Encrypted'
-  ClientHeight = 337
-  ClientWidth = 647
+  ClientHeight = 325
+  ClientWidth = 635
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -87,7 +85,6 @@ object Form2: TForm2
       E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4
       E4E4E4E4E4E4E4E4E4E4E4E4E400}
     OnClick = Image1Click
-    OnMouseEnter = Image1MouseEnter
   end
   object Button1: TButton
     Left = 175

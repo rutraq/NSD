@@ -221,7 +221,7 @@ begin
       closeFile(InpF);
       Erase(InpF);
       CloseFile(OutF);
-      MessageDlg('Файл зашифрован', mtInformation, [mbOk], 0);
+      ShowMessage('Файл зашифрован');
     end;
 end;
 
@@ -284,7 +284,7 @@ begin
       CloseFile(InpF);
       Erase(InpF);
       CloseFile(OutF);
-      MessageDlg('Файл расшифрован', mtInformation, [mbOk], 0);
+      ShowMessage('Файл расшифрован');
   end;
 end;
 
@@ -398,7 +398,7 @@ begin
       closeFile(InpF);
       Erase(InpF);
       CloseFile(OutF);
-      MessageDlg('Файл зашифрован', mtInformation, [mbOk], 0);
+      ShowMessage('Файл зашифрован');
     end;
   Panel1.Visible := False;
   ComboBox1.Visible := False;
@@ -465,7 +465,7 @@ if OpenDialog2.FileName <> '' then
       CloseFile(InpF);
       Erase(InpF);
       CloseFile(OutF);
-      MessageDlg('Файл зашифрован', mtInformation, [mbOk], 0);
+      ShowMessage('Файл расшифрован');
   end;
   Panel1.Visible := False;
   ComboBox2.Visible := False;

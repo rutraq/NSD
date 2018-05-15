@@ -1,27 +1,25 @@
-object Form2: TForm2
+object Form3: TForm3
   Left = 0
   Top = 0
-  BorderIcons = [biSystemMenu, biMinimize]
-  BorderStyle = bsSingle
-  Caption = 'Encrypted'
-  ClientHeight = 337
-  ClientWidth = 647
+  Caption = 'Test'
+  ClientHeight = 325
+  ClientWidth = 635
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -13
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
   Position = poScreenCenter
   OnClose = FormClose
   OnCreate = FormCreate
-  PixelsPerInch = 96
-  TextHeight = 13
+  PixelsPerInch = 120
+  TextHeight = 16
   object Image1: TImage
-    Left = 24
-    Top = 17
-    Width = 25
+    Left = 8
+    Top = 8
+    Width = 23
     Height = 25
     Picture.Data = {
       07544269746D6170A2070000424DA20700000000000036000000280000001900
@@ -87,99 +85,34 @@ object Form2: TForm2
       E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4E4
       E4E4E4E4E4E4E4E4E4E4E4E4E400}
     OnClick = Image1Click
-    OnMouseEnter = Image1MouseEnter
-  end
-  object Button1: TButton
-    Left = 175
-    Top = 248
-    Width = 89
-    Height = 25
-    Caption = #1047#1072#1096#1080#1092#1088#1086#1074#1072#1090#1100
-    TabOrder = 0
-    OnClick = Button1Click
-  end
-  object Button2: TButton
-    Left = 305
-    Top = 248
-    Width = 89
-    Height = 25
-    Caption = #1056#1072#1089#1096#1080#1092#1088#1086#1074#1072#1090#1100
-    TabOrder = 1
-    OnClick = Button2Click
   end
   object Memo1: TMemo
-    Left = 24
-    Top = 40
-    Width = 593
-    Height = 202
+    Left = 8
+    Top = 33
+    Width = 193
+    Height = 284
     Lines.Strings = (
       'Memo1')
-    TabOrder = 2
-  end
-  object Button3: TButton
-    Left = 45
-    Top = 279
-    Width = 219
-    Height = 25
-    Caption = #1047#1072#1096#1080#1092#1088#1086#1074#1072#1090#1100' '#1089' '#1087#1086#1084#1086#1097#1100#1102' USB-'#1085#1086#1089#1080#1090#1077#1083#1103
-    TabOrder = 3
-    OnClick = Button3Click
+    TabOrder = 0
+    OnChange = Memo1Change
   end
   object Memo2: TMemo
-    Left = 488
-    Top = 248
-    Width = 129
-    Height = 58
+    Left = 434
+    Top = 33
+    Width = 193
+    Height = 284
     Lines.Strings = (
       'Memo2')
-    TabOrder = 4
-    Visible = False
+    TabOrder = 1
   end
-  object Button4: TButton
-    Left = 305
-    Top = 279
-    Width = 233
+  object Button1: TButton
+    Left = 272
+    Top = 112
+    Width = 99
     Height = 25
-    Caption = #1056#1072#1089#1096#1080#1092#1088#1086#1074#1072#1090#1100' '#1089' '#1087#1086#1084#1086#1097#1100#1102' USB-'#1085#1086#1089#1080#1090#1077#1083#1103
-    TabOrder = 5
-    OnClick = Button4Click
-  end
-  object Panel1: TPanel
-    Left = 8
-    Top = 8
-    Width = 619
-    Height = 313
-    Caption = 'Panel1'
-    TabOrder = 6
-    Visible = False
-    object ComboBox1: TComboBox
-      Left = 209
-      Top = 147
-      Width = 184
-      Height = 21
-      TabOrder = 0
-      Text = #1042#1099#1073#1077#1088#1080#1090#1077' USB '#1076#1083#1103' '#1096#1080#1092#1088#1086#1074#1082#1080
-      OnChange = ComboBox1Change
-    end
-    object ComboBox2: TComboBox
-      Left = 209
-      Top = 147
-      Width = 192
-      Height = 21
-      TabOrder = 1
-      Text = #1042#1099#1073#1077#1088#1080#1090#1077' USB '#1076#1083#1103' '#1088#1072#1089#1096#1080#1092#1088#1086#1074#1082#1080
-      Visible = False
-      OnChange = ComboBox2Change
-    end
-  end
-  object OpenDialog1: TOpenDialog
-    Filter = 'Text|*.txt|All files|*.*'
-    Left = 592
-    Top = 80
-  end
-  object OpenDialog2: TOpenDialog
-    Filter = 'Encrypted | *.A&Y'
-    Left = 592
-    Top = 144
+    Caption = #1047#1072#1096#1080#1092#1088#1086#1074#1072#1090#1100
+    Enabled = False
+    TabOrder = 2
+    OnClick = Button1Click
   end
 end
