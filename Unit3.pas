@@ -97,14 +97,14 @@ begin
               begin
                 check := True;
               end;
-                {else
-                  begin
-                    password1 := '';
-                    password1 := InputBox('П А Р О Л Ь', 'ПАРОЛИ НЕ СОВПАДАЮТ, ВВЕДИТЕ ЕЩЁ РАЗ:', password1);
-                  end;  }
           end;
         if kolvo = 3 then
           begin
+            with Form3 do
+              begin
+                Memo1.Clear;
+                Memo2.Clear;
+              end;
             Form3.Hide;
             Form1.Show;
             ShowMessage('Ошибка ввода пароля');

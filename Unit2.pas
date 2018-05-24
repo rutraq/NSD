@@ -21,6 +21,7 @@ type
     Panel1: TPanel;
     ComboBox1: TComboBox;
     ComboBox2: TComboBox;
+    Image2: TImage;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -31,6 +32,8 @@ type
     procedure ComboBox1Change(Sender: TObject);
     procedure ComboBox2Change(Sender: TObject);
     procedure Image1MouseEnter(Sender: TObject);
+    procedure Image2Click(Sender: TObject);
+    procedure Image2MouseEnter(Sender: TObject);
   private
     { Private declarations }
   public
@@ -295,12 +298,14 @@ const
   pref = ':\';
 begin
   Combobox1.Items.Clear;
+  Image1.Visible := False;
     for Drive := 'B' to 'Z' do
       begin
         if GetDriveType(PChar(Drive + pref)) = DRIVE_REMOVABLE then Combobox1.Items.Add(Drive + pref);
       end;
   Panel1.Visible := True;
   ComboBox1.Visible := True;
+  ComboBox1.Text := 'Выберите USB для шифровки';
 end;
 
 procedure TForm2.Button4Click(Sender: TObject);
@@ -310,12 +315,14 @@ const
   pref = ':\';
 begin
   Combobox2.Items.Clear;
+  Image1.Visible := False;
     for Drive := 'B' to 'Z' do
       begin
         if GetDriveType(PChar(Drive + pref)) = DRIVE_REMOVABLE then Combobox2.Items.Add(Drive + pref);
       end;
   Panel1.Visible := True;
   ComboBox2.Visible := True;
+  ComboBox1.Text := 'Выберите USB для расшифровки';
 end;
 
 procedure TForm2.ComboBox1Change(Sender: TObject);
@@ -403,7 +410,6 @@ begin
   Panel1.Visible := False;
   ComboBox1.Visible := False;
   ComboBox1.Items.Clear;
-  ComboBox1.Text := 'Выберите USB для шифровки';
 end;
 
 procedure TForm2.ComboBox2Change(Sender: TObject);
@@ -470,7 +476,6 @@ if OpenDialog2.FileName <> '' then
   Panel1.Visible := False;
   ComboBox2.Visible := False;
   ComboBox2.Items.Clear;
-  ComboBox2.Text := 'Выберите USB для расшифровки';
 end;
 
 procedure TForm2.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -494,6 +499,17 @@ end;
 procedure TForm2.Image1MouseEnter(Sender: TObject);
 begin
   Form2.Image1.Cursor := CrHandPoint;
+end;
+
+procedure TForm2.Image2Click(Sender: TObject);
+begin
+  Panel1.Visible := False;
+  Image1.Visible := True;
+end;
+
+procedure TForm2.Image2MouseEnter(Sender: TObject);
+begin
+  Form2.Image2.Cursor := CrHandPoint;
 end;
 
 end.
