@@ -18,6 +18,10 @@ type
     Button3: TButton;
     Memo2: TMemo;
     Button4: TButton;
+    Panel1: TPanel;
+    ComboBox1: TComboBox;
+    ComboBox2: TComboBox;
+    Image2: TImage;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
@@ -25,6 +29,11 @@ type
     procedure Image1Click(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure Button4Click(Sender: TObject);
+    procedure ComboBox1Change(Sender: TObject);
+    procedure ComboBox2Change(Sender: TObject);
+    procedure Image1MouseEnter(Sender: TObject);
+    procedure Image2Click(Sender: TObject);
+    procedure Image2MouseEnter(Sender: TObject);
   private
     { Private declarations }
   public
@@ -32,7 +41,7 @@ type
   end;
 const
    A = 5;   {Константы для}
-   C =7;    {генератора}
+   C = 7;    {генератора}
    M =5536; {псевдослучайных чисел, далее - ПСЧ}
 
 var
@@ -59,19 +68,6 @@ implementation
 {$R *.dfm}
 
 uses Unit1;
-
-function GetHardDiskSerial(const DriveLetter: PChar): string;
-var
-  NotUsed:     DWORD;
-  VolumeFlags: DWORD;
-  VolumeInfo:  array[0..MAX_PATH] of Char;
-  VolumeSerialNumber: DWORD;
-begin
-  GetVolumeInformation(PChar(DriveLetter),
-    nil, SizeOf(VolumeInfo), @VolumeSerialNumber, NotUsed,
-    VolumeFlags, nil, 0);
-  Result := Format('%8.8X', [VolumeSerialNumber])
-end;
 
 procedure pass;
 var check, check1:boolean;
@@ -132,6 +128,19 @@ begin
             break;
           end;
       end;
+end;
+
+function GetHardDiskSerial(const DriveLetter: PChar): string;
+var
+  NotUsed:     DWORD;
+  VolumeFlags: DWORD;
+  VolumeInfo:  array[0..MAX_PATH] of Char;
+  VolumeSerialNumber: DWORD;
+begin
+  GetVolumeInformation(PChar(DriveLetter),
+    nil, SizeOf(VolumeInfo), @VolumeSerialNumber, NotUsed,
+    VolumeFlags, nil, 0);
+  Result := Format('%8.8X', [VolumeSerialNumber])
 end;
 
 procedure TForm2.Button1Click(Sender: TObject);{шифрование файла}
@@ -215,7 +224,7 @@ begin
       closeFile(InpF);
       Erase(InpF);
       CloseFile(OutF);
-      ShowMessage('Файл зашифрован');
+      MessageDlg('Файл зашифрован', mtInformation, [mbOk], 0);
     end;
 end;
 
@@ -278,17 +287,49 @@ begin
       CloseFile(InpF);
       Erase(InpF);
       CloseFile(OutF);
-      ShowMessage('Файл расшифрован');
+      MessageDlg('Файл расшифрован', mtInformation, [mbOk], 0);
   end;
 end;
 
 procedure TForm2.Button3Click(Sender: TObject);
+var
+  Drive: Char; //Буква диска
+const
+  pref = ':\';
+begin
+  Combobox1.Items.Clear;
+  Image1.Visible := False;
+    for Drive := 'B' to 'Z' do
+      begin
+        if GetDriveType(PChar(Drive + pref)) = DRIVE_REMOVABLE then Combobox1.Items.Add(Drive + pref);
+      end;
+  Panel1.Visible := True;
+  ComboBox1.Visible := True;
+  ComboBox1.Text := 'Выберите USB для шифровки';
+end;
+
+procedure TForm2.Button4Click(Sender: TObject);
+var
+  Drive: Char; //Буква диска
+const
+  pref = ':\';
+begin
+  Combobox2.Items.Clear;
+  Image1.Visible := False;
+    for Drive := 'B' to 'Z' do
+      begin
+        if GetDriveType(PChar(Drive + pref)) = DRIVE_REMOVABLE then Combobox2.Items.Add(Drive + pref);
+      end;
+  Panel1.Visible := True;
+  ComboBox2.Visible := True;
+  ComboBox1.Text := 'Выберите USB для расшифровки';
+end;
+
+procedure TForm2.ComboBox1Change(Sender: TObject);
 begin
   if OpenDialog1.Execute then
     begin
-      Memo2.Clear;
-      Memo2.Lines.LoadFromFile('C:\Log Files\KeyFile.txt');
-      password := Memo2.Text;
+      password := GetHardDiskSerial(PChar(ComboBox1.Text));
     end;
 
   if (OpenDialog1.FileName <> '') and (kolvo <> 3) then
@@ -364,20 +405,21 @@ begin
       closeFile(InpF);
       Erase(InpF);
       CloseFile(OutF);
-      ShowMessage('Файл зашифрован');
+      MessageDlg('Файл зашифрован', mtInformation, [mbOk], 0);
     end;
+  Panel1.Visible := False;
+  ComboBox1.Visible := False;
+  ComboBox1.Items.Clear;
 end;
 
-procedure TForm2.Button4Click(Sender: TObject);
+procedure TForm2.ComboBox2Change(Sender: TObject);
 begin
-  if OpenDialog2.Execute then
-    begin
-      Memo2.Clear;
-      Memo2.Lines.LoadFromFile('C:\Log Files\KeyFile.txt');
-      password := Memo2.Text;
-    end;
+if OpenDialog2.Execute then
+  begin
+    password := GetHardDiskSerial(PChar(ComboBox2.Text));
+  end;
 
-    if OpenDialog2.FileName <> '' then
+if OpenDialog2.FileName <> '' then
   begin
     FindFirst(OpenDialog2.FileName, faAnyFile, DirInfo);
       AssignFile(InpF, OpenDialog2.FileName);
@@ -429,8 +471,11 @@ begin
       CloseFile(InpF);
       Erase(InpF);
       CloseFile(OutF);
-      ShowMessage('Файл расшифрован');
+      MessageDlg('Файл зашифрован', mtInformation, [mbOk], 0);
   end;
+  Panel1.Visible := False;
+  ComboBox2.Visible := False;
+  ComboBox2.Items.Clear;
 end;
 
 procedure TForm2.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -441,7 +486,7 @@ end;
 procedure TForm2.FormCreate(Sender: TObject);
 begin
   Memo1.Clear;
-  Memo1.Lines.Add('При зашифровке файла, ваш файл изменит расширение на .A&Y, а при расшифроке он изменит своё расширение на исходное, так что менять расширение вручную нельзя.');
+  Memo1.Lines.Add('При шифровании файла, ваш файл изменит расширение на .A&Y, а при расшифровании он изменит своё расширение на исходное, так что менять расширение вручную нельзя.');
   Memo1.Lines.Add(' Если вы расшифровали файл с неверным паролем, то его нужно зашифровать обратно с тем же паролем и расшифровать с верным');
 end;
 
@@ -449,6 +494,22 @@ procedure TForm2.Image1Click(Sender: TObject);
 begin
   Form2.Hide;
   Form1.Show;
+end;
+
+procedure TForm2.Image1MouseEnter(Sender: TObject);
+begin
+  Form2.Image1.Cursor := CrHandPoint;
+end;
+
+procedure TForm2.Image2Click(Sender: TObject);
+begin
+  Panel1.Visible := False;
+  Image1.Visible := True;
+end;
+
+procedure TForm2.Image2MouseEnter(Sender: TObject);
+begin
+  Form2.Image2.Cursor := CrHandPoint;
 end;
 
 end.
