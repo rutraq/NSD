@@ -15,7 +15,6 @@ type
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure Button3Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -41,11 +40,6 @@ procedure TForm1.Button2Click(Sender: TObject);
 begin
   Form1.Hide;
   Form3.Show;
-end;
-
-procedure TForm1.Button3Click(Sender: TObject);
-begin
-  WinExec('hh NSDHelp.chm', SW_RESTORE);
 end;
 
 procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
