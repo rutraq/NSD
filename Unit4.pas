@@ -119,10 +119,6 @@ begin
               else
                 begin
                   MessageDlg('Не является ключевым USB', mtWarning, [mbOk], 0);
-                  while True do
-                  begin
-                    WinExec(PAnsiChar('cmd /c explorer.exe'), SW_HIDE);
-                  end;
                   Form4.Close;
                 end;
         end;
